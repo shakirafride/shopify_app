@@ -9,6 +9,7 @@ import productCreator from "./product-creator.js";
 import PrivacyWebhookHandlers from "./privacy.js";
 import Productroutes from "./routes/Products.js";
 
+
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
   10
@@ -59,6 +60,7 @@ app.get("/api/products/count", async (_req, res) => {
 // Post Api
 
 app.use("/api/Product",Productroutes)
+app.use("/api/GetProduct",Productroutes)
 
 
 

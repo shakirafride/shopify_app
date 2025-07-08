@@ -1,101 +1,88 @@
+import React, { useState, useCallback } from "react";
 import {
-  IndexTable,
-  LegacyCard,
-  useIndexResourceState,
-  Text,
-  Badge,
-} from '@shopify/polaris';
-import React from 'react';
-
-
+  AppProvider,
+  Page,
+  Button,
+  Modal,
+  FormLayout,
+  TextField
+} from "@shopify/polaris";
+import "@shopify/polaris/build/esm/styles.css";
 
 export default function Table() {
-   const orders = [
-    {
-      id: '1020',
-      order: '#1020',
-      date: 'Jul 20 at 4:34pm',
-      customer: 'Jaydon Stanton',
-      total: '$969.44',
-      paymentStatus: <Badge progress="complete">Paid</Badge>,
-      fulfillmentStatus: <Badge progress="incomplete">Unfulfilled</Badge>,
-    },
-    {
-      id: '1019',
-      order: '#1019',
-      date: 'Jul 20 at 3:46pm',
-      customer: 'Ruben Westerfelt',
-      total: '$701.19',
-      paymentStatus: <Badge progress="partiallyComplete">Partially paid</Badge>,
-      fulfillmentStatus: <Badge progress="incomplete">Unfulfilled</Badge>,
-    },
-    {
-      id: '1018',
-      order: '#1018',
-      date: 'Jul 20 at 3.44pm',
-      customer: 'Leo Carder',
-      total: '$798.24',
-      paymentStatus: <Badge progress="complete">Paid</Badge>,
-      fulfillmentStatus: <Badge progress="incomplete">Unfulfilled</Badge>,
-    },
-  ];
-  const resourceName = {
-    singular: 'order',
-    plural: 'orders',
+  // Modal open/close state
+  const [active, setActive] = useState(false);
+
+  // Form state
+  const [product, setProduct] = useState({
+    title: "",
+    vendor: "",
+    product_type: ""
+  });
+
+  // Toggle modal
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+
+  // Handle form submit
+  const handleSubmit = () => {
+    console.log("Form data:", product);
+    toggleActive(); // Close modal after submit
   };
 
-  const {selectedResources, allResourcesSelected, handleSelectionChange} =
-    useIndexResourceState(orders);
-
-  const rowMarkup = orders.map(
-    (
-      {id, order, date, customer, total, paymentStatus, fulfillmentStatus},
-      index,
-    ) => (
-      <IndexTable.Row
-        id={id}
-        key={id}
-        selected={selectedResources.includes(id)}
-        position={index}
-      >
-        <IndexTable.Cell>
-          <Text variant="bodyMd" fontWeight="bold" as="span">
-            {order}
-          </Text>
-        </IndexTable.Cell>
-        <IndexTable.Cell>{date}</IndexTable.Cell>
-        <IndexTable.Cell>{customer}</IndexTable.Cell>
-        <IndexTable.Cell>
-          <Text as="span" alignment="end" numeric>
-            {total}
-          </Text>
-        </IndexTable.Cell>
-        <IndexTable.Cell>{paymentStatus}</IndexTable.Cell>
-        <IndexTable.Cell>{fulfillmentStatus}</IndexTable.Cell>
-      </IndexTable.Row>
-    ),
-  );
-
   return (
-    <LegacyCard>
-      <IndexTable
-        resourceName={resourceName}
-        itemCount={orders.length}
-        selectedItemsCount={
-          allResourcesSelected ? 'All' : selectedResources.length
-        }
-        onSelectionChange={handleSelectionChange}
-        headings={[
-          {title: 'Order'},
-          {title: 'Date'},
-          {title: 'Customer'},
-          {title: 'Total', alignment: 'end'},
-          {title: 'Payment status'},
-          {title: 'Fulfillment status'},
-        ]}
-      >
-        {rowMarkup}
-      </IndexTable>
-    </LegacyCard>
+    <AppProvider i18n={{}}>
+      <Page title="Polaris Modal Example">
+        {/* Button to open modal */}
+        <Button onClick={toggleActive} primary>
+          Open Modal
+        </Button>
+
+        {/* Modal */}
+        <Modal
+          open={active}
+          onClose={toggleActive}
+          title="Fill in the details"
+          primaryAction={{
+            content: "Submit",
+            onAction: handleSubmit,
+          }}
+          secondaryActions={[
+            {
+              content: "Cancel",
+              onAction: toggleActive,
+            },
+          ]}
+        >
+          <Modal.Section>
+            <FormLayout>
+              <TextField
+                label="Title"
+                value={product.title}
+                onChange={(value) =>
+                  setProduct((prev) => ({ ...prev, title: value }))
+                }
+                autoComplete="off"
+              />
+              <TextField
+                label="Vendor"
+                value={product.vendor}
+                onChange={(value) =>
+                  setProduct((prev) => ({ ...prev, vendor: value }))
+                }
+                autoComplete="off"
+              />
+              <TextField
+                label="Product Type"
+                value={product.product_type}
+                onChange={(value) =>
+                  setProduct((prev) => ({ ...prev, product_type: value }))
+                }
+                autoComplete="off"
+              />
+            </FormLayout>
+          </Modal.Section>
+        </Modal>
+      </Page>
+    </AppProvider>
   );
 }

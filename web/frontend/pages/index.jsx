@@ -1,12 +1,12 @@
-import React from 'react'
-import Table from '../components/Table'
+import React from 'react';
+import { AppProvider } from '@shopify/polaris';
+import Table from '../components/Table';
+import '@shopify/polaris/build/esm/styles.css';
 
-export default function index() {
+export default function Index() {
   return (
-<>
-
-<Table/>
-
-</>
-  )
+    <AppProvider i18n={{}}>
+      <Table />
+    </AppProvider>
+  );
 }
