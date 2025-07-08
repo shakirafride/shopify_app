@@ -3,7 +3,7 @@
 client_id = "cefc9f0f366c53a6dcafcbe1c3e39a06"
 name = "productapp"
 handle = "productapp-39"
-application_url = "https://impressed-excerpt-similar-nicaragua.trycloudflare.com"
+application_url = "https://winston-moves-greater-versions.trycloudflare.com"
 embedded = true
 
 [build]
@@ -18,7 +18,7 @@ api_version = "2025-07"
 scopes = "write_products"
 
 [auth]
-redirect_urls = ["https://impressed-excerpt-similar-nicaragua.trycloudflare.com/auth/callback", "https://impressed-excerpt-similar-nicaragua.trycloudflare.com/auth/shopify/callback", "https://impressed-excerpt-similar-nicaragua.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://winston-moves-greater-versions.trycloudflare.com/auth/callback", "https://winston-moves-greater-versions.trycloudflare.com/auth/shopify/callback", "https://winston-moves-greater-versions.trycloudflare.com/api/auth/callback"]
 
 [pos]
 embedded = false
