@@ -9,35 +9,52 @@ import {
 } from "@shopify/polaris";
 import "@shopify/polaris/build/esm/styles.css";
 
-export default function Table() {
-  // Modal open/close state
+
+export default function Model() {
   const [active, setActive] = useState(false);
 
-  // Form state
   const [product, setProduct] = useState({
     title: "",
     vendor: "",
-    product_type: ""
+    product_type: "",
+    image: ""
   });
 
-  // Toggle modal
   const toggleActive = useCallback(() => setActive((active) => !active), []);
 
-  // Handle form submit
-  const handleSubmit = () => {
-    console.log("Form data:", product);
-    toggleActive(); // Close modal after submit
+  const handleSubmit = async () => {
+    try {
+      const body = {
+        title: product.title,
+        vendor: product.vendor,
+        product_type: product.product_type,
+        image: product.image
+      };
+
+      const response = await fetch('/api/Product/Createproduct', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+      console.log("Response:", data);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+
+    toggleActive();
   };
 
-  return (
+  return <>
     <AppProvider i18n={{}}>
       <Page title="Polaris Modal Example">
-        {/* Button to open modal */}
         <Button onClick={toggleActive} primary>
           Open Modal
         </Button>
 
-        {/* Modal */}
         <Modal
           open={active}
           onClose={toggleActive}
@@ -79,10 +96,20 @@ export default function Table() {
                 }
                 autoComplete="off"
               />
+              <TextField
+                label="Image URL"
+                value={product.image}
+                onChange={(value) =>
+                  setProduct((prev) => ({ ...prev, image: value }))
+                }
+                autoComplete="off"
+              />
             </FormLayout>
           </Modal.Section>
         </Modal>
       </Page>
     </AppProvider>
-  );
+    
+  </>
+  
 }

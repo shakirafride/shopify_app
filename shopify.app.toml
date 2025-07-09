@@ -3,7 +3,7 @@
 client_id = "cefc9f0f366c53a6dcafcbe1c3e39a06"
 name = "productapp"
 handle = "productapp-39"
-application_url = "https://cleared-doc-tubes-subaru.trycloudflare.com"
+application_url = "https://ending-blanket-leon-electoral.trycloudflare.com"
 embedded = true
 
 [build]
@@ -18,7 +18,7 @@ api_version = "2025-07"
 scopes = "write_products"
 
 [auth]
-redirect_urls = ["https://cleared-doc-tubes-subaru.trycloudflare.com/auth/callback", "https://cleared-doc-tubes-subaru.trycloudflare.com/auth/shopify/callback", "https://cleared-doc-tubes-subaru.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://ending-blanket-leon-electoral.trycloudflare.com/auth/callback", "https://ending-blanket-leon-electoral.trycloudflare.com/auth/shopify/callback", "https://ending-blanket-leon-electoral.trycloudflare.com/api/auth/callback"]
 
 [pos]
 embedded = false
